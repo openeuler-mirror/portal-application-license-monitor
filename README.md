@@ -1,4 +1,4 @@
-# portal-application-license-monitor
+# portal-jg_cascade_protection_scripts
 
 #### 介绍
 多瑙管理平台（Donau Portal）支持通过安全认证网关和CAS统一认证中心登录，对接安全认证网关和CAS统一认证中心时，用户需要参照当前提供的样例脚本定制自己所需的信息解析脚本。
