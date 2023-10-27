@@ -1,33 +1,45 @@
 # portal-application-license-monitor
 
 #### Description
-Donau Portal visualizes the status data of license management utilities through the monitoring module. The status data collection scripts of different types of license management utilities need to be created in accordance with the Donau Portal rules.
-portal-application-license-monitor provides a best practice for Donau Portal to interconnect with the FlexNet license management utility.
+user can log in Donau Portal through the security authentication gateway and CAS. When connecting to the security authentication gateway and CAS, you need to customize the required information parsing script based on the provided sample script.
 
 #### Software Architecture
-Python2/Python3
+Shell/Python2/Python3
 
 #### Operation
 
-1. Download the compressed package from  https://gitee.com/openeuler/portal-application-license-monitor and decompress it to the {INSTALL_PATH}/huawei/portal/ac/scripts/license_manager/ directory.
+1. Download the compressed package from  https://gitee.com/openeuler/portal-application-license-monitor/tree/jg_cascade_protection_scripts and decompress it to the {INSTALL_PATH}/huawei/portal/ac/scripts/auth/ directory.
 
-   Note: INSTALL_PATH is the client installation directory and SCHEDULER_TYPE is the scheduler type.
+   Note: INSTALL_PATH is the installation directory of Donau Portal.
 
-   <table> <tr> <td style='color:#fff;background:black'><pre>[root@hpc13554 license_manager]# pwd</pre>
-   <pre>/opt/huawei/portal/ac/scripts/license_manager</pre>
-   <pre>[root@hpc13554 license_manager]# ll</pre>
-   <pre>total 16</pre>
-   <pre>-rw-r--r-- 1 root root 15855 May  5 17:15 flexnet</pre>
-   [root@hpc13554 license_manager]# </td> </tr> </table>
+   <table> <tr> <td style='color:#fff;background:black'><pre>[root@hpc13554 auth]# pwd</pre>
+   <pre>/opt/huawei/portal/ac/scripts/auth</pre>
+   <pre>[root@hpc13554 auth]# ll</pre>
+   <pre>total 32</pre>
+   <pre>-rw-r--r-- 1 root root 655 May  5 17:15 cas_login_parser.py</pre>
+   <pre>-rw-r--r-- 1 root root 92 May  5 17:15 cas_login_parser.sh</pre>
+   <pre>-rw-r--r-- 1 root root 655 May  5 17:15 cas_logout_parser.py</pre>
+   <pre>-rw-r--r-- 1 root root 93 May  5 17:15 cas_logout_parser.sh</pre>
+   <pre>-rw-r--r-- 1 root root 477 May  5 17:15 cas_token_parser.py</pre>
+   <pre>-rw-r--r-- 1 root root 421 May  5 17:15 cas_token_parser.sh</pre>
+   <pre>-rw-r--r-- 1 root root 1448 May  5 17:15 gateway_token_parser.py</pre>
+   <pre>-rw-r--r-- 1 root root 135 May  5 17:15 gateway_token_parser.sh</pre>
 
-2. Change the owner of the script to the Donau Portal/Donau Portal Client installation user with permission 500.
+2. Change the owner of the script to the Donau Portal installation user with permission 500.
 
-   <table> <tr> <td style='color:#fff;background:black'><pre>[root@hpc13554 license_manager]# chown ccp_master: flexnet</pre>
-   <pre>[root@hpc13554 license_manager]# chmod 500 flexnet</pre>
-   <pre>[root@hpc13554 license_manager]# ll</pre>
-   <pre>total 16</pre>
-   <pre>-r-x------ 1 ccp_master ccs_master 15855 May  5 17:15 flexnet</pre>
-   [root@hpc13554 license_manager]# </td> </tr> </table>
+   <table> <tr> <td style='color:#fff;background:black'><pre>[root@hpc13554 auth]# chown ccp_master: *</pre>
+   <pre>[root@hpc13554 auth]# chmod 500 *</pre>
+   <pre>[root@hpc13554 auth]# ll</pre>
+   <pre>total 32</pre>
+   <pre>-r-x------ 1 ccp_master ccs_master 655 May  5 17:15 cas_login_parser.py</pre>
+   <pre>-r-x------ 1 ccp_master ccs_master 92 May  5 17:15 cas_login_parser.sh</pre>
+   <pre>-r-x------ 1 ccp_master ccs_master 655 May  5 17:15 cas_logout_parser.py</pre>
+   <pre>-r-x------ 1 ccp_master ccs_master 93 May  5 17:15 cas_logout_parser.sh</pre>
+   <pre>-r-x------ 1 ccp_master ccs_master 477 May  5 17:15 cas_token_parser.py</pre>
+   <pre>-r-x------ 1 ccp_master ccs_master 421 May  5 17:15 cas_token_parser.sh</pre>
+   <pre>-r-x------ 1 ccp_master ccs_master 1448 May  5 17:15 gateway_token_parser.py</pre>
+   <pre>-r-x------ 1 ccp_master ccs_master 135 May  5 17:15 gateway_token_parser.sh</pre>
+   [root@hpc13554 auth]# </td> </tr> </table>
 
 4. Modify the fileformat file format of the script file to unix (if dos2unix is installed, you can use dos2unix filename1 filename2 filename3 to convert multiple files, if dos2unix is not installed, you can follow the steps below to modify the file format.)
 
@@ -37,14 +49,9 @@ Python2/Python3
 
    c)     :wq!Save the file.
 
-#### Instructions
-
-1. For details, see section 7.1.26 in the "HPC 23.0.RC1 User Guide".
-
 #### Precautions
 
-1.  This script adaptation is for versions after HPC_23.0.RC1;
-2.  This script applies only to the FlexNet license management utility. For other types of license management utilities, you can customize a status data collection script named after the license management utility by referring to this script.
+1.  This script adaptation is for versions after HPC_23.0.0;
 
 #### Contribution
 
