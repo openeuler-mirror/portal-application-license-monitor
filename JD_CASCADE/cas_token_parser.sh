@@ -2,7 +2,7 @@
 workdir=$(cd $(dirname $0); pwd)
 
 # cas认证使用http协议
-output=$(python ${workdir}/token_parser.py "$1")
+output=$(python ${workdir}/cas_token_parser.py "$1")
 if [[ $? -eq 0 && -n "${output}" ]]; then
     username=$(echo -e "$output" | grep -oP '^.+$' | tail -n 1)
     echo "${username}" && exit 0
