@@ -6,6 +6,10 @@ import json
 
 PARAM = sys.argv[1]
 DATA = json.loads(PARAM)
+cn = ''
+ip = ''
+forwardHost = ''
+result=''
 
 def main():
     if len(DATA) == 0:
@@ -13,30 +17,43 @@ def main():
         sys.exit(1)
     else:
         if 'parameters' in DATA:
-            # URL传参，KOAL_CERT_CN/KOAL_CLIENT_IP/X-Forward-Host根据实际情况修改，forwardHost可返回空
-            result = {
-                "cn":DATA['parameters']['KOAL_CERT_CN'],
-                "ip":DATA['parameters']['KOAL_CLIENT_IP'],
-                "forwardHost":DATA['parameters']['X-Forward-Host']
-            }
-        elif 'headers' in DATA:
+            # URL传参，koal_cert_cn/koal_client_ip/x-forwarded-host根据实际情况修改
+	    for key in DATA['parameters']:
+		if key.lower() == 'koal_cert_cn':
+		    cn=DATA['parameters']['koal_cert_cn']
+		elif key.lower() == 'koal_client_ip':
+		    ip=DATA['parameters']['koal_client_ip']
+		elif key.lower() == 'x-forwarded-host':
+		    forwardHost=DATA['parameters']['x-forwarded-host']
+		else:
+		    continue
+        if 'headers' in DATA:
             # URL传参，同上
-            result = {
-                "cn":DATA['headers']['KOAL_CERT_CN'],
-                "ip":DATA['headers']['KOAL_CLIENT_IP'],
-                "forwardHost":DATA['headers']['X-Forward-Host']
-            }
-        elif 'cookies' in DATA:
+	    for key in DATA['headers']:
+                if key.lower() == 'koal_cert_cn':
+                    cn=DATA['headers']['koal_cert_cn']
+                elif key.lower() == 'koal_client_ip':
+                    ip=DATA['headers']['koal_client_ip']
+                elif key.lower() == 'x-forwarded-host':
+                    forwardHost=DATA['headers']['x-forwarded-host']
+		else:
+                    continue
+        if 'cookies' in DATA:
             # cookie传参，同上
-            result = {
-                "cn":DATA['cookies']['KOAL_CERT_CN'],
-                "ip":DATA['cookies']['KOAL_CLIENT_IP'],
-                "forwardHost":DATA['cookies']['X-Forward-Host']
+	    for key in DATA['cookies']:   
+                if key.lower() == 'koal_cert_cn':
+                    cn=DATA['cookies']['koal_cert_cn']
+                elif key.lower() == 'koal_client_ip':
+                    ip=DATA['cookies']['koal_client_ip']
+                elif key.lower() == 'x-forwarded-host':
+                    forwardHost=DATA['cookies']['x-forwarded-host']
+		else:
+                    continue
+    result = {
+                "cn":cn,
+                "ip":ip,
+                "forwardHost":'https://' + forwardHost
             }
-        else:
-            # 未传合法参数
-            print("Error: Param is null.")
-            sys.exit(1)
     # 输出解析结果
     print(json.dumps(result))
     sys.exit(0)  
